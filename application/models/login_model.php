@@ -10,15 +10,17 @@ class login_model extends CI_Model
       $u = $this->input->post('username');
       $p = $this->input->post('password');
 
-      $query = $this->db->where('username',$u)
+      $query = $this->db->join('level','level.id_level = admin.id_level')
+                        ->where('username',$u)
                         ->where('password',$p)
                         ->get('admin');
+
       if ($this->db->affected_rows() > 0) {
         $data_login = $query->row();
         $data_session = array(
                           'username' => $data_login->username,
-                          'logged_in' => TRUE,
-                          'password' =>$data_login->password
+                          'id_level' =>$data_login->id_level,
+                          'logged_in' => TRUE
                           );
         $this->session->set_userdata($data_session);
         return TRUE;

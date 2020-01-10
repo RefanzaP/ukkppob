@@ -2,7 +2,7 @@
 
 <html lang="en">
 <head>
-	<title>Login PPOB</title>
+	<title>Login PPOB | ADMIN </title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -42,7 +42,7 @@
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
 				<form action="<?php echo base_url() ?>index.php/login/proses" class="login100-form validate-form" method="post">
 					<span class="login100-form-title p-b-33">
-						Login PPOB
+						Login Admin
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Username Not valid">
@@ -78,7 +78,7 @@
 							Create an account?
 						</span>
 
-						<a href="#" class="txt2 hov1">
+						<a href="<?php echo base_url();?>index.php/register" class="txt2 hov1">
 							Sign up
 						</a>
 					</div>

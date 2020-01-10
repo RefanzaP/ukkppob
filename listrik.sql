@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2019 at 05:02 AM
+-- Generation Time: Oct 31, 2019 at 07:01 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -41,7 +41,45 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id_admin`, `username`, `password`, `nama`, `id_level`) VALUES
-(1, 'admin', 'admin', 'hello', 0);
+(2, 'admin', 'admin', 'test', 1),
+(3, 'budi', 'budi', 'budi', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `level`
+--
+
+CREATE TABLE `level` (
+  `id_level` int(11) NOT NULL,
+  `nama_level` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `level`
+--
+
+INSERT INTO `level` (`id_level`, `nama_level`) VALUES
+(1, 'admin'),
+(2, 'owner');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pembayaran`
+--
+
+CREATE TABLE `pembayaran` (
+  `id_pembayaran` int(11) NOT NULL,
+  `id_tagihan` int(11) NOT NULL,
+  `tanggal_pembayaran` date NOT NULL,
+  `bulan_bayar` varchar(20) NOT NULL,
+  `total_bayar` int(11) NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `bukti` int(11) NOT NULL,
+  `id_admin` int(11) NOT NULL,
+  `biaya_admin` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -61,6 +99,21 @@ CREATE TABLE `penggunaan` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tagihan`
+--
+
+CREATE TABLE `tagihan` (
+  `id_tagihan` int(11) NOT NULL,
+  `id_penggunaan` int(11) NOT NULL,
+  `bulan` varchar(20) NOT NULL,
+  `tahun` varchar(20) NOT NULL,
+  `jumlah_meter` float NOT NULL,
+  `status` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tarif`
 --
 
@@ -69,6 +122,13 @@ CREATE TABLE `tarif` (
   `daya` varchar(10) NOT NULL,
   `tarifperkwh` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tarif`
+--
+
+INSERT INTO `tarif` (`id_tarif`, `daya`, `tarifperkwh`) VALUES
+(2, '500', 15000);
 
 -- --------------------------------------------------------
 
@@ -92,7 +152,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `nama`, `username`, `password`, `email`, `alamat`, `id_tarif`, `nomor_kwh`) VALUES
-(1, 'admin', 'admin', 'admin', 'admin@admin', 'tes', 0, '');
+(1, 'Refanza ', 'refan', 'refan', 'refan@gmail.com', 'Jl.Pandanwangi', 2, '15000');
 
 --
 -- Indexes for dumped tables
@@ -106,11 +166,32 @@ ALTER TABLE `admin`
   ADD KEY `id_level` (`id_level`);
 
 --
+-- Indexes for table `level`
+--
+ALTER TABLE `level`
+  ADD PRIMARY KEY (`id_level`);
+
+--
+-- Indexes for table `pembayaran`
+--
+ALTER TABLE `pembayaran`
+  ADD PRIMARY KEY (`id_pembayaran`),
+  ADD KEY `id_admin` (`id_admin`),
+  ADD KEY `id_tagihan` (`id_tagihan`);
+
+--
 -- Indexes for table `penggunaan`
 --
 ALTER TABLE `penggunaan`
   ADD PRIMARY KEY (`id_penggunaan`),
   ADD KEY `id_pelanggan` (`id_pelanggan`);
+
+--
+-- Indexes for table `tagihan`
+--
+ALTER TABLE `tagihan`
+  ADD PRIMARY KEY (`id_tagihan`),
+  ADD KEY `id_penggunaan` (`id_penggunaan`);
 
 --
 -- Indexes for table `tarif`
@@ -133,7 +214,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `level`
+--
+ALTER TABLE `level`
+  MODIFY `id_level` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `pembayaran`
+--
+ALTER TABLE `pembayaran`
+  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `penggunaan`
@@ -142,16 +235,56 @@ ALTER TABLE `penggunaan`
   MODIFY `id_penggunaan` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `tagihan`
+--
+ALTER TABLE `tagihan`
+  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tarif`
 --
 ALTER TABLE `tarif`
-  MODIFY `id_tarif` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tarif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `admin`
+--
+ALTER TABLE `admin`
+  ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`id_level`) REFERENCES `level` (`id_level`);
+
+--
+-- Constraints for table `pembayaran`
+--
+ALTER TABLE `pembayaran`
+  ADD CONSTRAINT `pembayaran_ibfk_1` FOREIGN KEY (`id_tagihan`) REFERENCES `tagihan` (`id_tagihan`);
+
+--
+-- Constraints for table `penggunaan`
+--
+ALTER TABLE `penggunaan`
+  ADD CONSTRAINT `penggunaan_ibfk_1` FOREIGN KEY (`id_pelanggan`) REFERENCES `user` (`id_user`);
+
+--
+-- Constraints for table `tagihan`
+--
+ALTER TABLE `tagihan`
+  ADD CONSTRAINT `tagihan_ibfk_1` FOREIGN KEY (`id_penggunaan`) REFERENCES `penggunaan` (`id_penggunaan`);
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_tarif`) REFERENCES `tarif` (`id_tarif`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

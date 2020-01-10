@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>PPOB PLN| ADMIN</title>
+  <title>ForumIND | ADMIN</title>
 
   <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
@@ -66,7 +66,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>Admn</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Ppob</span>
+      <span class="logo-lg"><b>Portal</b>Forum</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -81,7 +81,7 @@
           <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
-                <img src="<?php echo base_url(); ?>assets/images/user.png" class="user-image" alt="User Image">
+                <img src="<?php echo base_url(); ?>assets/img/default-avatar.png" class="user-image" alt="User Image">
                 <span> <?php echo $this->session->userdata('username') ?></span>
                 <i class="icon-submenu lnr lnr-chevron down"></i>
               </a>
@@ -106,7 +106,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
        <div class="pull-left image">
-         <img src="<?php echo base_url(); ?>assets/images/user.png" class="img-circle" alt="User Image">
+         <img src="<?php echo base_url(); ?>assets/images/default-avatar.png" class="img-circle" alt="User Image">
        </div>
        <div class="pull-left info">
          <p>
@@ -133,6 +133,27 @@
 
       <ul class="sidebar-menu" data-widget="tree">
        <li class="header">MAIN NAVIGATION</li>
+       <li><a href="<?php echo base_url();?>index.php/dashboard"> <i class="fa fa-home"></i> <span>Home</span> </a></li>
+       <li><a href="<?php echo base_url();?>index.php/user/"><i class="fa fa-user"></i>List Member</a></li>
+       <li><a href="<?php echo base_url();?>index.php/kategori"><i class="fa fa-pie-chart"></i><span>Kategori</span></a></li>
+       <li><a href="<?php echo base_url();?>index.php/post"><i class="fa fa-edit"></i> <span>Post</span></a></li>
+       <li><a href="<?php echo base_url();?>index.php/topik"><i class="fa fa-crosshairs"></i> <span>Topik</span></a></li>
+       <li><a href="<?php echo base_url();?>index.php/dashboard"><i class="fa fa-cc-diners-club"></i> <span>User Messages</span></a></li>
+       <li><a href="<?php echo base_url();?>index.php/mailbox"><i class="fa fa-envelope"></i> <span>Inbox</span></a></li>
+       <li class=" treeview">
+       <a href="">
+           <i class="fa fa-book"></i> <span>Admin</span>
+             <span class="pull-right-container">
+           <i class="fa fa-angle-left pull-right"></i>
+         </span>
+       </a>
+         <ul class="treeview-menu">
+           <li><a href="<?php echo base_url();?>index.php/user_level"><i class="fa fa-circle-o"></i> <span>Level</span></a></li>
+           <li><a href="<?php echo base_url();?>index.php/admin"><i class="fa fa-circle-o"></i> List Admin</a></li>
+         </ul>
+       </li>
+       <li><a href="<?php echo base_url();?>index.php/status"><i class="fa fa-desktop"></i> <span>Master Status</span></a></li>
+
     </section>
     <!-- /.sidebar -->
   </aside>
